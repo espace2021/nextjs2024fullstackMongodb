@@ -1,21 +1,21 @@
 const AUTEUR_API="/auteurs/"
 
 export const fetchAuteurs=async()=> { 
-const res = await fetch(process.env.API_URL+AUTEUR_API, { cache: 'no-store' })
+const res = await fetch(process.env.NEXT_PUBLIC_API_URL+AUTEUR_API, { cache: 'no-store' })
 const response = await res.json();
-return response.auteurs;
+return response;
 }
 
 export const fetchAuteurById=async(auteurId)=> {
-    const res = await fetch(process.env.API_URL+AUTEUR_API+`${auteurId}`,{
+    const res = await fetch(process.env.NEXT_PUBLIC_API_URL+AUTEUR_API+`${auteurId}`, { cache: 'no-store' },{
         method: 'GET'
     });
     const response = await res.json();
-    return response.auteur 
+     return response;
 }
 
-export const deleteAuteur=async(auteurId) =>{
-    const res = await fetch(process.env.API_URL+AUTEUR_API+`${auteurId}`,{
+export const deleteAuteur=async(auteurId) =>{ 
+    const res = await fetch(process.env.NEXT_PUBLIC_API_URL+AUTEUR_API+`${auteurId}`,{
         method: 'DELETE'
     });
     const response = await res.json();
@@ -24,7 +24,7 @@ export const deleteAuteur=async(auteurId) =>{
 }
 
 export const addAuteur=async(auteur)=> {
-    const res = await fetch(process.env.API_URL+AUTEUR_API, {
+    const res = await fetch(process.env.NEXT_PUBLIC_API_URL+AUTEUR_API, {
         method: 'POST',
         headers: {
         'Content-Type': 'application/json',
@@ -36,7 +36,7 @@ export const addAuteur=async(auteur)=> {
 }
 
 export const editAuteur=async(auteur) =>{
-    const res = await fetch(process.env.API_URL+AUTEUR_API+`${auteur._id}`, {
+    const res = await fetch(process.env.NEXT_PUBLIC_API_URL+AUTEUR_API+`${auteur._id}`, {
         method: 'PUT',
         headers: {
         'Content-Type': 'application/json',

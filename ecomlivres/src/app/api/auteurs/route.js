@@ -24,8 +24,8 @@ export async function POST(req) {
 export async function GET() {
     try {
         await connectDB();
-        const auteurs = await Auteur.find();
-        return NextResponse.json({ auteurs });
+        const auteurs = await Auteur.find({}, null, {sort: {'_id': -1}});
+        return NextResponse.json(auteurs );
     } catch (error) {
         return NextResponse.json({ error });
     }

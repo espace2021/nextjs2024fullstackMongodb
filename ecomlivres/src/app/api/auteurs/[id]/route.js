@@ -8,7 +8,7 @@ export async function GET(_, { params }) {
         await connectDB();
         const auteur = await Auteur.findById(params.id);
         if (auteur) {
-            return NextResponse.json({ auteur });
+            return NextResponse.json(auteur);
         }
         return NextResponse.json({ message: `Auteur ${params.id} not found` }, { status: HttpStatusCode.NotFound });
     } catch (error) {
@@ -28,7 +28,7 @@ export async function PUT(req, { params }) {
             if (body.email) {
                 auteur.email = body.email;
             }
-            if (body.description) {
+            if (body.numtel) {
                 auteur.numtel = body.numtel;
             }
             auteur.save();

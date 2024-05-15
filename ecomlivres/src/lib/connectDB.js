@@ -1,4 +1,4 @@
-
+/*
 // Importation de la bibliothèque mongoose pour l'interaction avec MongoDB
 import mongoose from "mongoose";
 
@@ -60,7 +60,7 @@ async function connectDB() {
 // Exportation de la fonction pour se connecter à la base de données
 export default connectDB;
 
-
+*/
 /*
 Lorsque la fonction connectDB() est appelée pour la première fois, cached.promise est null.
 La première fois que la fonction est appelée, elle initialise une nouvelle promesse pour établir la connexion à la base de données 
@@ -75,3 +75,17 @@ n'est établie qu'une seule fois, même si la fonction est appelée à plusieurs
 */
 
 
+import mongoose from "mongoose";
+const DATABASE_URL = process.env.NEXT_PUBLIC_DATABASE_URL;
+const connectDB=async()=> {
+try{
+await mongoose.connect(DATABASE_URL,{
+useNewUrlParser:true,
+useUnifiedTopology:true
+});
+console.log("connexion a la base de donnée réussie")
+}catch(error){
+    throw new Error("erreur de connexion a la base de données")
+}
+}
+export default connectDB;

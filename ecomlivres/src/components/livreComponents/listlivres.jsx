@@ -11,6 +11,8 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import Link from 'next/link';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 
+import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
+
 const Listlivres = ({livres}) => {
 
     const router = useRouter();
@@ -101,7 +103,16 @@ const Listlivres = ({livres}) => {
                 size: 50,
                 Cell: ({ cell, row }) => (
                 <div >
-          
+                <Button
+                  size="md"
+                  className="text-primary btn-link edit"
+                  >
+                    <Link href={`/admin/livres/updateLivre/${cell.row.original._id}`}>
+                    <EditOutlinedIcon/>
+                </Link>
+                
+                </Button>
+
                 <Button
                 onClick={(e) => {
                 deletelivre(cell.row.original._id,e);

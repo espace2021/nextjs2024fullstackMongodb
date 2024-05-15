@@ -10,20 +10,7 @@ import { editLivre } from '@/services/livreService';
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
 
-import axios from 'axios';
-
-import { FilePond,registerPlugin } from 'react-filepond'
-import 'filepond/dist/filepond.min.css';
-import FilePondPluginImageExifOrientation from 'filepond-plugin-image-exif-orientation'
-import FilePondPluginImagePreview from 'filepond-plugin-image-preview'
-import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css'
-
-registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview)
-
-
-const UpdateLivre = ({livre,LesEditeurs,lesSpecialites,lesAuteurs}) => {
-
-const [files, setFiles] = useState([]);
+const NewLivre = ({livre,LesEditeurs,lesSpecialites,lesAuteurs}) => {
 
     const router = useRouter();
 
@@ -57,14 +44,6 @@ useEffect(() => {
     })
     setAuteurs(tabAut)
   
-    //cas Filepond
-    setFiles( [
-        {
-          source: livre.couverture,
-          options: { type: 'local' }
-        }
-        ])
-
  }, [livre]);
 
 
@@ -101,44 +80,16 @@ setValidated(true);
 }
 
 const handleReset = () => {
-    router.push('/admin/livres')
-    router.refresh()
+    setIsbn("")
+    setTitre("")
+    setAnnedition("")
+    setPrix("")
+    setQtestock("")
+    setCouverture("")
+    setSpecialite("")
+    setMaised("")
+    setAuteurs("")
 }
-
-const serverOptions = () => { console.log('server pond');
-return {
-  load: (source, load, error, progress, abort, headers) => {
-      var myRequest = new Request(source);
-      fetch(myRequest).then(function(response) {
-        response.blob().then(function(myBlob) {
-          load(myBlob);
-        });
-      });
-    },
-  process: (fieldName, file, metadata, load, error, progress, abort) => {
-      console.log(file)
-    const data = new FormData();
-    
-    data.append('file', file);
-    data.append('upload_preset', 'Ecommerce_cloudinary');
-    data.append('cloud_name', 'iset-sfax');
-    data.append('public_id', file.name);
-
-    axios.post('https://api.cloudinary.com/v1_1/iset-sfax/image/upload', data)
-      .then((response) => response.data)
-      .then((data) => {
-        console.log(data);
-       setCouverture(data.url) ;
-        load(data);
-      })
-      .catch((error) => {
-        console.error('Error uploading file:', error);
-        error('Upload failed');
-        abort();
-      });
-  },
-};
-};
 
 
 return (
@@ -228,18 +179,18 @@ Qté Incorrecte
 
 <Form.Group className="col-md-6">
 <Form.Label>Couverture *</Form.Label>
-<div style={{ width: "80%", margin: "auto", padding: "1%" }}>
-     <FilePond
-                   files={files}
-                   acceptedFileTypes="image/*"
-                   onupdatefiles={setFiles}
-                   allowMultiple={false}
-                   server={serverOptions()}
-                   name="file"
-                      
-          />
-    </div>    
-
+<InputGroup hasValidation>
+<Form.Control
+type="text"
+required
+placeholder="Couverture"
+value={couverture}
+onChange={(e)=>setCouverture(e.target.value)}
+/>
+<Form.Control.Feedback type="invalid">
+Couverture Incorrecte
+</Form.Control.Feedback>
+</InputGroup>
 </Form.Group>
 </Row>
 <Row className="mb-2">
@@ -326,4 +277,4 @@ onClick={()=>handleReset()}>Annuler</Button>
 </div>
 );
 };
-export default UpdateLivre
+export default NewLivre

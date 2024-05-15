@@ -1,29 +1,16 @@
 "use client"
-import React, { useState,useEffect } from 'react';
+import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Col from 'react-bootstrap/Col';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Row from 'react-bootstrap/Row';
 import { useRouter } from "next/navigation";
-import { editLivre } from '@/services/livreService';
+import { addLivre } from '@/services/livreService';
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
 
-import axios from 'axios';
-
-import { FilePond,registerPlugin } from 'react-filepond'
-import 'filepond/dist/filepond.min.css';
-import FilePondPluginImageExifOrientation from 'filepond-plugin-image-exif-orientation'
-import FilePondPluginImagePreview from 'filepond-plugin-image-preview'
-import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css'
-
-registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview)
-
-
-const UpdateLivre = ({livre,LesEditeurs,lesSpecialites,lesAuteurs}) => {
-
-const [files, setFiles] = useState([]);
+const NewLivre = ({LesEditeurs,lesSpecialites,lesAuteurs}) => {
 
     const router = useRouter();
 
@@ -39,42 +26,12 @@ const [auteurs, setAuteurs] = useState([]);
 
 const [validated, setValidated] = useState(false);
 
-useEffect(() => {
-
-    setIsbn(livre.isbn)
-    setTitre(livre.titre)
-    setAnnedition(livre.annedition)
-    setPrix(livre.prix)
-    setQtestock(livre.qtestock)
-    setCouverture(livre.couverture)
-    setSpecialite(livre.specialite._id); 
-    setMaised(livre.maised._id);
-
-    //cas liste auteurs
-    const tabAut=[]
-    livre.auteurs.map((item) =>{
-     tabAut.push(item._id)
-    })
-    setAuteurs(tabAut)
-  
-    //cas Filepond
-    setFiles( [
-        {
-          source: livre.couverture,
-          options: { type: 'local' }
-        }
-        ])
-
- }, [livre]);
-
-
 const handleSubmit = (e) => {
 e.preventDefault();
 const form = e.currentTarget;
 if (form.checkValidity() === true) {
 
 const newLivre = {
-    _id:livre._id,  
     isbn,
     titre,
     annedition,
@@ -85,8 +42,8 @@ const newLivre = {
     maised,
     auteurs
 };
-//faire le update dans la BD
-editLivre(newLivre)
+//faire le add dans la BD
+addLivre(newLivre)
 .then(res => {
   router.push('/admin/livres')
     router.refresh()
@@ -94,59 +51,41 @@ editLivre(newLivre)
 })
 .catch(error=>{
 
-alert("Erreur ! Modification non effectuée")
+alert("Erreur ! Insertion non effectuée")
 })
 }
 setValidated(true);
 }
 
 const handleReset = () => {
-    router.push('/admin/livres')
-    router.refresh()
+    setIsbn("")
+    setTitre("")
+    setAnnedition("")
+    setPrix("")
+    setQtestock("")
+    setCouverture("")
+    setSpecialite("")
+    setMaised("")
+    setAuteurs("")
 }
 
-const serverOptions = () => { console.log('server pond');
-return {
-  load: (source, load, error, progress, abort, headers) => {
-      var myRequest = new Request(source);
-      fetch(myRequest).then(function(response) {
-        response.blob().then(function(myBlob) {
-          load(myBlob);
-        });
-      });
-    },
-  process: (fieldName, file, metadata, load, error, progress, abort) => {
-      console.log(file)
-    const data = new FormData();
-    
-    data.append('file', file);
-    data.append('upload_preset', 'Ecommerce_cloudinary');
-    data.append('cloud_name', 'iset-sfax');
-    data.append('public_id', file.name);
-
-    axios.post('https://api.cloudinary.com/v1_1/iset-sfax/image/upload', data)
-      .then((response) => response.data)
-      .then((data) => {
-        console.log(data);
-       setCouverture(data.url) ;
-        load(data);
-      })
-      .catch((error) => {
-        console.error('Error uploading file:', error);
-        error('Upload failed');
-        abort();
-      });
-  },
-};
-};
-
+const toggleAuteurs = (option) => { 
+    if (auteurs.includes(option)) { 
+        setAuteurs( 
+            auteurs.filter((item) =>  
+                item !== option)); 
+    } else { 
+        setAuteurs( 
+            [...auteurs, option]); 
+    } 
+}; 
 
 return (
 <div>
 
  <Form noValidate validated={validated} onSubmit={handleSubmit}>
 
- <h2>Modification Livre</h2>
+ <h2>Ajout Livre</h2>
 
 <div className="container w-100 d-flex justify-content-center">
 <div>
@@ -228,18 +167,18 @@ Qté Incorrecte
 
 <Form.Group className="col-md-6">
 <Form.Label>Couverture *</Form.Label>
-<div style={{ width: "80%", margin: "auto", padding: "1%" }}>
-     <FilePond
-                   files={files}
-                   acceptedFileTypes="image/*"
-                   onupdatefiles={setFiles}
-                   allowMultiple={false}
-                   server={serverOptions()}
-                   name="file"
-                      
-          />
-    </div>    
-
+<InputGroup hasValidation>
+<Form.Control
+type="text"
+required
+placeholder="Couverture"
+value={couverture}
+onChange={(e)=>setCouverture(e.target.value)}
+/>
+<Form.Control.Feedback type="invalid">
+Couverture Incorrecte
+</Form.Control.Feedback>
+</InputGroup>
 </Form.Group>
 </Row>
 <Row className="mb-2">
@@ -297,7 +236,7 @@ Edition Incorrecte
                    SelectProps={{multiple: true}}
                    value={auteurs}
                    helperText="Sélectionner des auteurs"
-                   onChange={(event)=>{setAuteurs(event.target.value)}}
+                   onChange={(event)=>setAuteurs(event.target.value)}
                     >
                {
                lesAuteurs ?    
@@ -326,4 +265,4 @@ onClick={()=>handleReset()}>Annuler</Button>
 </div>
 );
 };
-export default UpdateLivre
+export default NewLivre

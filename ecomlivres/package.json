@@ -17,6 +17,8 @@
     "@fullpage/react-fullpage": "^0.1.42",
     "@mui/icons-material": "^5.15.17",
     "@mui/material": "^5.15.17",
+    "@smastrom/react-rating": "^1.5.0",
+    "@stripe/stripe-js": "^3.4.0",
     "axios": "^1.6.8",
     "bootstrap": "^5.3.3",
     "express": "^4.19.2",
@@ -34,7 +36,9 @@
     "react-bootstrap": "^2.10.2",
     "react-dom": "^18",
     "react-filepond": "^7.1.2",
-    "react-pro-sidebar": "^1.1.0"
+    "react-pro-sidebar": "^1.1.0",
+    "stripe": "^15.7.0",
+    "use-shopping-cart": "^3.2.0"
   },
   "devDependencies": {
     "postcss": "^8",

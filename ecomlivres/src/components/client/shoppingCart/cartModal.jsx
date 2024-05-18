@@ -6,6 +6,8 @@ import ClearIcon from '@mui/icons-material/Clear';
 
 import {loadStripe} from "@stripe/stripe-js";
 
+import './style.css';
+
 export default function cartModal() {
     
     const { shouldDisplayCart,cartDetails,cartCount , removeItem , clearCart, totalPrice,} = useShoppingCart();
@@ -59,7 +61,7 @@ export default function cartModal() {
             >
              <ClearIcon/>
         </div>
-       
+        <div id="partieImprimable">
           {Object.values(cartDetails).map((item) => (
     
             <div className="flex items-center gap-4 mb-3" key={item.id}>
@@ -74,24 +76,41 @@ export default function cartModal() {
              {item.title} <span className="text-xs">({item.quantity})</span>
             </div>
             <div className="ml-auto">{item.price} TND</div>
+
+            <div id="a-exclure"> 
             <button className="hover:bg-emerald-50 transition-colors rounded-full duration-500 p-1"
             onClick={() => removeItem(item.id)}
             >
             <DeleteIcon color="secondary"/>
             </button>
+         </div>
+
           </div>
       
           ))}
                 <article className="mt-3 flex flex-col">
                     Total : {totalPrice} TND
+       
+        <div id="a-exclure">         
+         {/* zone d'impression */}
+
+         <button 
+                    className="bg-emerald-50 hover:bg-emerald-500 hover:text-white transition-colors duration-500 text-emerald-500 py-3 px-5 rounded-md w-100"
+                    onClick={()=> window.print()}
+                   >
+                    Imprimer
+                  </button>
+
+        {/* zone validationn de payement */}
                   <button 
                    className="bg-amber-50 hover:bg-amber-500 hover:text-white transition-colors duration-500 text-amber-500 py-3 px-5 rounded-md w-100"
                    onClick={(event)=>handleClickStripe(event)}
                    >
                      {status !== "loading" ? "Proceed to checkout" : "Loading..."}
                   </button>
-
+        </div>   
                </article>
+        </div>       
         </>
       ) : (
         <div className="p-5">You have no items in your cart</div>

@@ -12,6 +12,7 @@ import HelpIcon from '@mui/icons-material/Help';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { useSession, signIn, signOut } from 'next-auth/react'
 
+import { useRouter } from 'next/navigation'
 import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { useShoppingCart } from "use-shopping-cart" ;
@@ -20,6 +21,8 @@ import CartModal from "./shoppingCart/cartModal";
 
 function Menu() {
 
+  const router = useRouter()
+  
   const { handleCartClick, cartCount } = useShoppingCart();
 
   const { data: session } = useSession()

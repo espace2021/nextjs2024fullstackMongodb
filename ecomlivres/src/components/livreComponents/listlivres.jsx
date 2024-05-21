@@ -58,7 +58,7 @@ const Listlivres = ({livres}) => {
     {
     accessorKey: 'titre', 
     header: 'TITRE',
-    size: 100,
+    size: 70,
     },
     {
     accessorKey: 'isbn',
@@ -68,17 +68,17 @@ const Listlivres = ({livres}) => {
     {
     accessorKey: 'annedition', 
     header: 'ANNEE',
-    size: 100,
+    size: 30,
     },
     {
     accessorKey: 'prix', 
     header: 'PRIX',
-    size: 50,
+    size: 10,
     },
     {
     accessorKey: 'qtestock', 
     header: 'QTE',
-    size: 50,
+    size: 10,
     },
     {
         accessorFn: (originalRow) => originalRow.auteurs.map((aut,i)=>{ 

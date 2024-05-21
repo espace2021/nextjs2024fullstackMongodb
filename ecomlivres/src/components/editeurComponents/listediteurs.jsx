@@ -4,7 +4,6 @@ import { MaterialReactTable } from 'material-react-table';
 
 import Button from 'react-bootstrap/Button';
 import {deleteEditeur} from "@/services/editeurService"
-import { useRouter } from "next/navigation";
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 
 import NewEditeurComponent from './NewEditeurComponent';
@@ -24,16 +23,15 @@ const updateEditeur =(edmod) => {
     setLesEditeurs(editeurs.map((editeur) =>editeur._id === edmod._id ? edmod : editeur));
     }
 
-  const router = useRouter();
-
     const deleteediteur=(id)=>{
       
       if(window.confirm("supprimer Editeur O/N")) {
         
         deleteEditeur(id)
         .then((res)=>{ console.log(res)
-         router.refresh()
-        })
+     
+         setLesEditeurs(LesEditeurs.filter((item)=>item._id!==id))
+      })
         .catch(error=>{
             console.log(error)
            })
@@ -94,7 +92,7 @@ const updateEditeur =(edmod) => {
     );
 return (
 <div>
-    <NewEditeurComponent />
+    <NewEditeurComponent LesEditeurs={LesEditeurs} setLesEditeurs={setLesEditeurs}/>
 <MaterialReactTable columns={columns} data={LesEditeurs} />
 {show ? <UpdateEditeurComponent ed={editeur} updateEditeur={updateEditeur} show={true} setShow={setShow} /> : null}
   

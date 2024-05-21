@@ -7,9 +7,9 @@ import Modal from 'react-bootstrap/Modal';
 import {addEditeur} from "@/services/editeurService"
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 
-const Insertediteur =()=> {
+const Insertediteur =({LesEditeurs,setLesEditeurs})=> {
 
-const [editeur,setEditeur]=useState({})
+  const [editeur,setEditeur]=useState({})
 const [validated, setValidated] = useState(false);
 const [show, setShow] = useState(false);
 const handleClose = () => setShow(false);
@@ -17,24 +17,28 @@ const handleShow = () => setShow(true);
 
 const handlechange=(e)=>{
   
-    setEditeur({...editeur,[e.target.name]:e.target.value})
+  setEditeur({...editeur,[e.target.name]:e.target.value})
   }
 
-  const handleSubmit = (e) => {
+  const  handleSubmit = (e) => { 
     e.preventDefault();
     const form = e.currentTarget;
     if (form.checkValidity() === true) {
       
                 //faire le add dans la BD
-                addEditeur(editeur);
+               addEditeur(editeur).then((res) => { 
+                  console.log(res);
+                  setLesEditeurs([editeur,...LesEditeurs]);
+
                 handleReset()
                 setValidated(false);
-       }
+                }).catch((err) => {window.alert(err)})
+            }
     setValidated(true);
     }
 
     const handleReset=()=>{
-        setEditeur({})
+      setEditeur({})
         handleClose()
         }
        

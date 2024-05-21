@@ -7,7 +7,7 @@ import Modal from 'react-bootstrap/Modal';
 import {editEditeur} from "@/services/editeurService"
 
 
-const Updateediteur =({ ed,updateEditeur,show,setShow})=> {
+const Updateediteur =({ ed,LesEditeurs,setLesEditeurs,show,setShow})=> {
 
 const [editeur,setEditeur]=useState(ed)
 const [validated, setValidated] = useState(false);
@@ -28,7 +28,7 @@ const handlechange=(e)=>{
                 //faire le update dans la BD
                 editEditeur(editeur).then(res => { console.log(res)
                    // faire le update dans le tableau affiché
-                    updateEditeur(editeur);
+                   setLesEditeurs(LesEditeurs.map((myediteur) =>myediteur._id === editeur._id ? editeur : myediteur));
                     //vider le form
                     handleClose()
                     setValidated(false);
@@ -49,7 +49,7 @@ const handlechange=(e)=>{
 <Modal show={show} onHide={handleClose}>
  <Form noValidate validated={validated} onSubmit={handleSubmit}>
 <Modal.Header closeButton>
- <h2>Modifier un Editeur</h2>
+ <h2>Modifier un Editeurrrr</h2>
 </Modal.Header>
 <Modal.Body>
 <div className="container w-100 d-flex justify-content-center">

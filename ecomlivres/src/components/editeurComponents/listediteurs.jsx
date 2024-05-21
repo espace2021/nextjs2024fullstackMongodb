@@ -13,15 +13,12 @@ import UpdateEditeurComponent from './UpdateEditeurComponent';
 
 const Listediteurs = ({editeurs}) => {
 
+const [LesEditeurs,setLesEditeurs]=useState(editeurs)
+
 //pour edit modal
 const [show, setShow] = useState(false);
 const handleShow = () => setShow(true);
 const [editeur,setEditeur]=useState([])
-const [LesEditeurs,setLesEditeurs]=useState(editeurs)
-
-const updateEditeur =(edmod) => {
-    setLesEditeurs(editeurs.map((editeur) =>editeur._id === edmod._id ? edmod : editeur));
-    }
 
     const deleteediteur=(id)=>{
       
@@ -94,7 +91,7 @@ return (
 <div>
     <NewEditeurComponent LesEditeurs={LesEditeurs} setLesEditeurs={setLesEditeurs}/>
 <MaterialReactTable columns={columns} data={LesEditeurs} />
-{show ? <UpdateEditeurComponent ed={editeur} updateEditeur={updateEditeur} show={true} setShow={setShow} /> : null}
+{show ? <UpdateEditeurComponent ed={editeur} LesEditeurs={LesEditeurs} setLesEditeurs={setLesEditeurs} show={true} setShow={setShow} /> : null}
   
 </div>
 

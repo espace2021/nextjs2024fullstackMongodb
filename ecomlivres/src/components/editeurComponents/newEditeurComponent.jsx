@@ -27,9 +27,9 @@ const handlechange=(e)=>{
       
                 //faire le add dans la BD
                addEditeur(editeur).then((res) => { 
-                  console.log(res);
-                  setLesEditeurs([editeur,...LesEditeurs]);
-
+                  console.log(res.editeur);
+                  setLesEditeurs([res.editeur,...LesEditeurs]);
+                  console.log(LesEditeurs); 
                 handleReset()
                 setValidated(false);
                 }).catch((err) => {window.alert(err)})

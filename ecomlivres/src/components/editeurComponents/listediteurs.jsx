@@ -6,10 +6,10 @@ import Button from 'react-bootstrap/Button';
 import {deleteEditeur} from "@/services/editeurService"
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 
-import NewEditeurComponent from './NewEditeurComponent';
+import NewEditeurComponent from './newEditeurComponent';
 
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
-import UpdateEditeurComponent from './UpdateEditeurComponent';
+import UpdateEditeurComponent from './updateEditeurComponent';
 
 const Listediteurs = ({editeurs}) => {
 

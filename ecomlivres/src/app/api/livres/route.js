@@ -1,7 +1,7 @@
 import { HttpStatusCode } from 'axios';
 import Livre from '@/models/Livre';
 import {  NextResponse } from 'next/server';
-
+import connectDB from '@/lib/connectDB';
 export async function POST(req) {
     try {
        
@@ -22,7 +22,7 @@ export async function POST(req) {
   
 export async function GET() {
     try {
-     
+        await connectDB();
         const livres = await Livre.find({}, null, {sort: {'_id': -1}}).populate('auteurs').populate('specialite').populate('maised')
         return NextResponse.json(livres );
     } catch (error) {

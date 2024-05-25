@@ -1,6 +1,7 @@
 import { HttpStatusCode } from 'axios';
 import Auteur from '@/models/Auteur';
 import {  NextResponse } from 'next/server';
+import connectDB from '@/lib/connectDB';
 
 export async function POST(req) {
     try {
@@ -20,7 +21,7 @@ export async function POST(req) {
 
 export async function GET() {
     try {
-       
+        await connectDB();
         const auteurs = await Auteur.find({}, null, {sort: {'_id': -1}});
         return NextResponse.json(auteurs );
     } catch (error) {

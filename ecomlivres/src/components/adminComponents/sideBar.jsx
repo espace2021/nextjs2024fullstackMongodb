@@ -69,7 +69,7 @@ const SideBar = () => {
       <MenuItem component={<Link href="/admin/livres" />}> <ArticleIcon/> Livres </MenuItem>
       <MenuItem component={<Link href="/admin/auteurs" />}> <CategoryIcon/> Auteurs </MenuItem>
       <MenuItem component={<Link href="/admin/editeurs" />}> <ContentCopyIcon/> Editeurs</MenuItem>
-      <MenuItem component={<Link href="#" />}> <ReceiptIcon/> Spécialités </MenuItem>
+      <MenuItem component={<Link href="/admin/specialites" />}> <ReceiptIcon/> Spécialités </MenuItem>
       <MenuItem component={<Link href="#" />}> <GroupIcon/> Utilisateurs </MenuItem>
       <MenuItem component={<Link href="#" />}> <CalendarMonthIcon/> Calendrier </MenuItem>
       <MenuItem component={<Link href="#" />}> <BarChartIcon/> Chart </MenuItem>

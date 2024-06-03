@@ -36,6 +36,7 @@
     "react-bootstrap": "^2.10.2",
     "react-dom": "^18",
     "react-filepond": "^7.1.2",
+    "react-hot-toast": "^2.4.1",
     "react-pro-sidebar": "^1.1.0",
     "stripe": "^15.7.0",
     "use-shopping-cart": "^3.2.0"

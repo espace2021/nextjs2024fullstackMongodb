@@ -50,7 +50,7 @@ const SideBar = () => {
               <div>
                 <img
                   src={session.user.image}
-                  alt={session.user.name}
+                  alt=""
                   className='inline-block rounded-full'
                   width="30"
                   height="30"
@@ -71,7 +71,7 @@ const SideBar = () => {
       <MenuItem component={<Link href="/admin/editeurs" />}> <ContentCopyIcon/> Editeurs</MenuItem>
       <MenuItem component={<Link href="/admin/specialites" />}> <ReceiptIcon/> Spécialités </MenuItem>
       <MenuItem component={<Link href="#" />}> <GroupIcon/> Utilisateurs </MenuItem>
-      <MenuItem component={<Link href="#" />}> <CalendarMonthIcon/> Calendrier </MenuItem>
+      <MenuItem component={<Link href="/admin/calendar" />}> <CalendarMonthIcon/> Calendrier </MenuItem>
       <MenuItem component={<Link href="#" />}> <BarChartIcon/> Chart </MenuItem>
       <MenuItem component={<Link href="#" />}> <LightModeIcon/> Thème </MenuItem>
     </Menu>

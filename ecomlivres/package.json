@@ -19,6 +19,8 @@
     "@mui/material": "^5.15.17",
     "@smastrom/react-rating": "^1.5.0",
     "@stripe/stripe-js": "^3.4.0",
+    "@tensorflow-models/mobilenet": "^2.1.1",
+    "@tensorflow/tfjs": "^4.20.0",
     "axios": "^1.6.8",
     "bootstrap": "^5.3.3",
     "express": "^4.19.2",
